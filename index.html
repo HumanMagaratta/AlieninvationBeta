@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+                                <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -20,6 +20,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            padding: 10px; /* Memberikan sedikit ruang di sekitar game */
         }
         
         #gameContainer {
@@ -192,10 +193,14 @@
             box-shadow: 0 0 20px rgba(255, 0, 0, 1);
         }
         
-        @media (max-width: 800px) {
+        @media (max-width: 850px) {
+            body {
+                padding: 5px;
+            }
+            
             #gameContainer {
-                width: 100vw;
-                height: 100vh;
+                width: 100%;
+                height: calc(100vh - 20px);
                 border: none;
                 border-radius: 0;
             }
@@ -214,6 +219,42 @@
             
             p {
                 font-size: 16px;
+            }
+            
+            button {
+                padding: 10px 25px;
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-height: 650px) {
+            #gameContainer {
+                height: calc(100vh - 20px);
+            }
+            
+            .screen {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 32px;
+                margin-bottom: 10px;
+            }
+            
+            h2 {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
+            
+            p {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            button {
+                padding: 8px 20px;
+                font-size: 16px;
+                margin-top: 10px;
             }
         }
     </style>
@@ -280,7 +321,7 @@
         <div id="victoryScreen" class="screen" style="display: none;">
             <h1>KEMENANGAN!</h1>
             <h2>Anda Mengalahkan Bos Alien!</h2>
-            <p>Selamat <strong>PLAYER</strong>!</p>
+            <p>Selamat <strong>MUHAMMAD TASBIH</strong>!</p>
             <p>Anda telah menyelamatkan galaksi dari invasi alien.</p>
             <p>Skor Akhir: <span id="victoryScore">0</span></p>
             <button id="victoryRestartButton">MAIN LAGI</button>
@@ -317,8 +358,8 @@
                 this.width = 40;
                 this.height = 50;
                 this.x = canvas.width / 2 - this.width / 2;
-                // PERUBAHAN: Posisi pesawat lebih ke atas agar tidak tertutup tombol
-                this.y = canvas.height - this.height - 100;
+                // PERUBAHAN: Posisi pesawat lebih tinggi agar tidak tertutup tombol
+                this.y = canvas.height - this.height - 120; // Dinaikkan 20px
                 this.speed = 5;
                 this.color = '#0af';
                 this.lastShot = 0;
@@ -790,7 +831,7 @@
             
             // Reset posisi player
             player.x = canvas.width / 2 - player.width / 2;
-            player.y = canvas.height - player.height - 100; // Tetap posisi atas
+            player.y = canvas.height - player.height - 120; // Tetap posisi atas
             
             // Kosongkan objek game
             bullets = [];
@@ -994,6 +1035,26 @@
         // Inisialisasi awal
         createStars();
         drawBackground();
+        
+        // Penyesuaian layout untuk layar kecil
+        function adjustLayout() {
+            const gameContainer = document.getElementById('gameContainer');
+            const body = document.body;
+            
+            // Jika tinggi layar kurang dari 650px, sesuaikan tinggi game container
+            if (window.innerHeight < 650) {
+                gameContainer.style.height = (window.innerHeight - 20) + 'px';
+            }
+            
+            // Jika lebar layar kurang dari 850px, sesuaikan lebar game container
+            if (window.innerWidth < 850) {
+                gameContainer.style.width = (window.innerWidth - 10) + 'px';
+            }
+        }
+        
+        // Panggil fungsi penyesuaian layout saat halaman dimuat dan di-resize
+        window.addEventListener('load', adjustLayout);
+        window.addEventListener('resize', adjustLayout);
     </script>
 </body>
 </html>
